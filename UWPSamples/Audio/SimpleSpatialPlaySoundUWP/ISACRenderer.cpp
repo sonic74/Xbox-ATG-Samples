@@ -105,9 +105,13 @@ HRESULT ISACRenderer::ActivateCompleted( IActivateAudioInterfaceAsyncOperation *
 			hr = E_FAIL;
 			goto exit;
 		}
+		else {
+			wchar_t text_buffer[80] = { 0 }; swprintf(text_buffer, _countof(text_buffer), L"audioObjectFormatCount=%d\n", audioObjectFormatCount);OutputDebugString(text_buffer);
+		}
 		 
 		// Select the most favorable format, first one
 		hr = audioObjectFormatEnumerator->GetFormat(0, &objectFormat);
+		wchar_t text_buffer[80] = { 0 }; swprintf(text_buffer, _countof(text_buffer), L"objectFormat->nSamplesPerSec:%d; objectFormat->wBitsPerSample:%d\n", objectFormat->nSamplesPerSec, objectFormat->wBitsPerSample); OutputDebugString(text_buffer);
 
 		// Create the event that will be used to signal the client for more data
 		m_bufferCompletionEvent = CreateEvent(nullptr, FALSE, FALSE, nullptr);
@@ -135,7 +139,7 @@ HRESULT ISACRenderer::ActivateCompleted( IActivateAudioInterfaceAsyncOperation *
 			objectmask,
 			m_MaxDynamicObjects,
 			m_MaxDynamicObjects,
-			AudioCategory_GameEffects,
+			AudioCategory_Media,
 			m_bufferCompletionEvent,
 			this
 		};

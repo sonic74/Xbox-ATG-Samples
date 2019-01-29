@@ -99,11 +99,19 @@
   <PropertyGroup Label="UserMacros">
     <AppxPackageSigningEnabled>false</AppxPackageSigningEnabled>
     <AppxSymbolPackageEnabled>false</AppxSymbolPackageEnabled>
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxBundle>Always</AppxBundle>
+    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
+    <PackageCertificateThumbprint>22984EE72B0801DB44B973E8EC6A3896AE8C0593</PackageCertificateThumbprint>
+    <PackageCertificateKeyFile>SimpleSpatialPlaySoundUWP_StoreKey.pfx</PackageCertificateKeyFile>
+    <AppInstallerUpdateFrequency>1</AppInstallerUpdateFrequency>
+    <AppInstallerCheckForUpdateFrequency>OnApplicationRun</AppInstallerCheckForUpdateFrequency>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <Link>
-      <AdditionalDependencies>ATGTelemetryUWP.lib;d2d1.lib; d3d11.lib; dxgi.lib; dxguid.lib; windowscodecs.lib; dwrite.lib; %(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\Kits\Telemetry\$(Platform);%(AdditionalLibraryDirectories); $(VCInstallDir)\lib\store\arm; $(VCInstallDir)\lib\arm</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d2d1.lib; d3d11.lib; dxgi.lib; dxguid.lib; windowscodecs.lib; dwrite.lib; %(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories); $(VCInstallDir)\lib\store\arm; $(VCInstallDir)\lib\arm</AdditionalLibraryDirectories>
     </Link>
     <ClCompile>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -120,8 +128,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <Link>
-      <AdditionalDependencies>ATGTelemetryUWP.lib;d2d1.lib; d3d11.lib; dxgi.lib; dxguid.lib; windowscodecs.lib; dwrite.lib; %(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\Kits\Telemetry\$(Platform);%(AdditionalLibraryDirectories); $(VCInstallDir)\lib\store\arm; $(VCInstallDir)\lib\arm</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d2d1.lib; d3d11.lib; dxgi.lib; dxguid.lib; windowscodecs.lib; dwrite.lib; %(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories); $(VCInstallDir)\lib\store\arm; $(VCInstallDir)\lib\arm</AdditionalLibraryDirectories>
     </Link>
     <ClCompile>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -138,8 +146,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Link>
-      <AdditionalDependencies>ATGTelemetryUWP.lib;d2d1.lib; d3d11.lib; dxgi.lib; dxguid.lib; windowscodecs.lib; dwrite.lib; %(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\Kits\Telemetry\$(Platform);%(AdditionalLibraryDirectories); $(VCInstallDir)\lib\store; $(VCInstallDir)\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d2d1.lib; d3d11.lib; dxgi.lib; dxguid.lib; windowscodecs.lib; dwrite.lib; %(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories); $(VCInstallDir)\lib\store; $(VCInstallDir)\lib</AdditionalLibraryDirectories>
     </Link>
     <ClCompile>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -157,8 +165,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Link>
-      <AdditionalDependencies>ATGTelemetryUWP.lib;d2d1.lib; d3d11.lib; dxgi.lib; dxguid.lib; windowscodecs.lib; dwrite.lib; %(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\Kits\Telemetry\$(Platform);%(AdditionalLibraryDirectories); $(VCInstallDir)\lib\store; $(VCInstallDir)\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d2d1.lib; d3d11.lib; dxgi.lib; dxguid.lib; windowscodecs.lib; dwrite.lib; %(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories); $(VCInstallDir)\lib\store; $(VCInstallDir)\lib</AdditionalLibraryDirectories>
     </Link>
     <ClCompile>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -176,8 +184,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Link>
-      <AdditionalDependencies>ATGTelemetryUWP.lib;d2d1.lib; d3d11.lib; dxgi.lib; dxguid.lib; windowscodecs.lib; dwrite.lib; %(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\Kits\Telemetry\$(Platform);%(AdditionalLibraryDirectories); $(VCInstallDir)\lib\store\amd64; $(VCInstallDir)\lib\amd64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d2d1.lib; d3d11.lib; dxgi.lib; dxguid.lib; windowscodecs.lib; dwrite.lib; %(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories); $(VCInstallDir)\lib\store\amd64; $(VCInstallDir)\lib\amd64</AdditionalLibraryDirectories>
     </Link>
     <ClCompile>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -194,8 +202,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Link>
-      <AdditionalDependencies>ATGTelemetryUWP.lib;d2d1.lib; d3d11.lib; dxgi.lib; dxguid.lib; windowscodecs.lib; dwrite.lib; %(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\Kits\Telemetry\$(Platform);%(AdditionalLibraryDirectories); $(VCInstallDir)\lib\store\amd64; $(VCInstallDir)\lib\amd64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d2d1.lib; d3d11.lib; dxgi.lib; dxguid.lib; windowscodecs.lib; dwrite.lib; %(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories); $(VCInstallDir)\lib\store\amd64; $(VCInstallDir)\lib\amd64</AdditionalLibraryDirectories>
     </Link>
     <ClCompile>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -239,60 +247,51 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\Logo.png" />
-    <Image Include="Assets\SmallLogo.png" />
-    <Image Include="Assets\SplashScreen.png" />
-    <Image Include="Assets\StoreLogo.png" />
-    <Image Include="Assets\WideLogo.png" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\Kits\DirectXTK\DirectXTK_Windows10.vcxproj">
       <Project>{f4776924-619c-42c7-88b2-82c947ccc9e7}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Media Include="..\..\..\Media\Sounds\ChannelIDs714.wav" />
-    <Media Include="..\..\..\Media\Sounds\Jungle_RainThunder_mix714.wav" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
-      <FileType>Document</FileType>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
+      <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
+      <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="Readme.docx" />
+    <None Include="SimpleSpatialPlaySoundUWP_StoreKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Kits\Telemetry\ARM\ATGTelemetryUWP.dll">
-      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Platform)'=='ARM'">true</DeploymentContent>
-      <Link>ATGTelemetryUWP.dll</Link>
-    </None>
-    <None Include="..\..\..\Kits\Telemetry\Win32\ATGTelemetryUWP.dll">
-      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Platform)'=='ARM'">true</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Platform)'=='Win32'">true</DeploymentContent>
-      <Link>ATGTelemetryUWP.dll</Link>
-    </None>
-    <None Include="..\..\..\Kits\Telemetry\x64\ATGTelemetryUWP.dll">
-      <ExcludedFromBuild Condition="'$(Platform)'=='ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Platform)'=='x64'">true</DeploymentContent>
-      <Link>ATGTelemetryUWP.dll</Link>
-    </None>
+    <None Include="Package.StoreAssociation.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\LargeTile.scale-100.png" />
+    <Image Include="Assets\LargeTile.scale-200.png" />
+    <Image Include="Assets\LargeTile.scale-400.png" />
+    <Image Include="Assets\Logo.scale-100.png" />
+    <Image Include="Assets\Logo.scale-200.png" />
+    <Image Include="Assets\Logo.scale-400.png" />
+    <Image Include="Assets\SmallLogo.altform-unplated_targetsize-16.png" />
+    <Image Include="Assets\SmallLogo.altform-unplated_targetsize-256.png" />
+    <Image Include="Assets\SmallLogo.altform-unplated_targetsize-48.png" />
+    <Image Include="Assets\SmallLogo.scale-100.png" />
+    <Image Include="Assets\SmallLogo.scale-200.png" />
+    <Image Include="Assets\SmallLogo.scale-400.png" />
+    <Image Include="Assets\SmallLogo.targetsize-16.png" />
+    <Image Include="Assets\SmallLogo.targetsize-256.png" />
+    <Image Include="Assets\SmallLogo.targetsize-48.png" />
+    <Image Include="Assets\SmallTile.scale-100.png" />
+    <Image Include="Assets\SmallTile.scale-200.png" />
+    <Image Include="Assets\SmallTile.scale-400.png" />
+    <Image Include="Assets\SplashScreen.scale-100.png" />
+    <Image Include="Assets\SplashScreen.scale-200.png" />
+    <Image Include="Assets\SplashScreen.scale-400.png" />
+    <Image Include="Assets\StoreLogo.scale-100.png" />
+    <Image Include="Assets\StoreLogo.scale-200.png" />
+    <Image Include="Assets\StoreLogo.scale-400.png" />
+    <Image Include="Assets\WideLogo.scale-100.png" />
+    <Image Include="Assets\WideLogo.scale-200.png" />
+    <Image Include="Assets\WideLogo.scale-400.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

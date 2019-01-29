@@ -72,7 +72,7 @@ private:
 	void CreateDeviceDependentResources();
 	void CreateWindowSizeDependentResources();
 
-	bool LoadFile(LPCWSTR inFile);
+	bool LoadFile(uint8_t* wavData, size_t wavDataSize);
 	void SetChannelTypesVolumes(void);
 
 	HRESULT InitializeSpatialStream(void);
@@ -99,7 +99,6 @@ private:
 	uint32_t m_bufferSize;
 
 	bool	m_fileLoaded;
-	int		m_curFile;
 
 	//worker thread for spatial system
 	PTP_WORK m_workThread;

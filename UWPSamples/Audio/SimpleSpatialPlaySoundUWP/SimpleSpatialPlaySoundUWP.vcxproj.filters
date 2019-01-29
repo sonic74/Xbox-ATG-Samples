@@ -4,12 +4,11 @@
     <Filter Include="Common">
       <UniqueIdentifier>26104b34-cb6a-48a5-9dcc-a17918fe3e26</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assets">
-      <UniqueIdentifier>17ea61f1-f66d-4b67-9bbf-c3e37cc3dc93</UniqueIdentifier>
-      <Extensions>bmp;dds;fbx;gif;jpg;jpeg;tga;tiff;tif;png</Extensions>
-    </Filter>
     <Filter Include="ATG Tool Kit">
       <UniqueIdentifier>{2756b903-0a26-4347-84cc-690c257d5545}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{4dcc2b14-5379-4a06-b494-0f480b3aa5ec}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -39,61 +38,100 @@
     <ClCompile Include="ISACRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\Logo.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\SmallLogo.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\SplashScreen.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\StoreLogo.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\WideLogo.png">
-      <Filter>Assets</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
   </ItemGroup>
   <ItemGroup>
-    <Media Include="..\..\..\Media\Sounds\ChannelIDs714.wav">
-      <Filter>Assets</Filter>
-    </Media>
-    <Media Include="..\..\..\Media\Sounds\Jungle_RainThunder_mix714.wav">
-      <Filter>Assets</Filter>
-    </Media>
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="Readme.docx" />
+    <None Include="Package.StoreAssociation.xml" />
+    <None Include="SimpleSpatialPlaySoundUWP_StoreKey.pfx" />
     <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <Filter>Assets</Filter>
     </None>
-    <None Include="Readme.docx" />
-    <None Include="..\..\..\Kits\Telemetry\ARM\ATGTelemetryUWP.dll">
-      <Filter>Common\Telemetry\ARM</Filter>
-    </None>
-    <None Include="..\..\..\Kits\Telemetry\x64\ATGTelemetryUWP.dll">
-      <Filter>Common\Telemetry\x64</Filter>
-    </None>
-    <None Include="..\..\..\Kits\Telemetry\Win32\ATGTelemetryUWP.dll">
-      <Filter>Common\Telemetry\Win32</Filter>
-    </None>
-    <Filter Include="Common\Telemetry">
-      <UniqueIdentifier>{f04fc9a1-d629-4755-ba2e-3d71e3b307db}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Common\Telemetry\ARM">
-      <UniqueIdentifier>{b7f8ae97-c8eb-41f9-bcb4-f100a2f730d0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Common\Telemetry\Win32">
-      <UniqueIdentifier>{ab3bab50-9984-4c69-be32-537423465109}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Common\Telemetry\x64">
-      <UniqueIdentifier>{debde8dc-79ad-43c5-bf6a-656a5faeba3a}</UniqueIdentifier>
-    </Filter>
     <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
       <Filter>Assets</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\SmallTile.scale-100.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallTile.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallTile.scale-400.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Logo.scale-100.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Logo.scale-400.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\WideLogo.scale-100.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\WideLogo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\WideLogo.scale-400.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\LargeTile.scale-100.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\LargeTile.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\LargeTile.scale-400.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.scale-100.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.scale-400.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.targetsize-16.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.targetsize-48.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.targetsize-256.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.altform-unplated_targetsize-16.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.altform-unplated_targetsize-48.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.altform-unplated_targetsize-256.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.scale-100.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.scale-400.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.scale-100.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.scale-400.png">
+      <Filter>Assets</Filter>
+    </Image>
   </ItemGroup>
 </Project>

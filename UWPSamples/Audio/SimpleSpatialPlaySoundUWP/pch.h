@@ -38,6 +38,10 @@
 #include "SpriteBatch.h"
 #include "SpriteFont.h"
 
+
+#include <ppltasks.h>
+
+
 namespace DX
 {
     // Helper class for COM exceptions

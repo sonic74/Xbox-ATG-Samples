@@ -16,19 +16,23 @@ extern void ExitSample();
 
 namespace
 {
-    const LPCWSTR g_FileList[] =
-    {
-        L"Jungle_RainThunder_mix714.wav",
-        L"ChannelIDs714.wav",
-    };
-
-    const int numFiles = _countof(g_FileList);
+	wchar_t g_File[256] = { 0 };
+	UINT32										g_curBufferLoc;
 }
 
 using namespace DirectX;
 using namespace Windows::System::Threading;
 using namespace Windows::Media::Devices;
 using Microsoft::WRL::ComPtr;
+
+
+using namespace concurrency;
+using namespace Platform;
+using namespace Windows::Storage;
+using namespace Windows::Storage::Streams;
+using namespace Windows::Storage::Pickers;
+using namespace Windows::Storage::AccessCache;
+
 
 namespace
 {
@@ -74,7 +78,7 @@ namespace
                     Sink->m_Renderer->Reset();
                 }
 
-                for (int chan = 0; chan < MAX_CHANNELS; chan++)
+				for (int chan = 0; chan < MAX_CHANNELS; chan++)
                 {
                     //Activate the object if not yet done
                     if (Sink->m_WavChannels[chan].object == nullptr)
@@ -118,7 +122,7 @@ namespace
                         }
 
                         Sink->m_WavChannels[chan].curBufferLoc++;
-                        if (Sink->m_WavChannels[chan].curBufferLoc == Sink->m_WavChannels[chan].buffersize)
+						if (Sink->m_WavChannels[chan].curBufferLoc == Sink->m_WavChannels[chan].buffersize)
                         {
                             Sink->m_WavChannels[chan].curBufferLoc = 0;
                         }
@@ -126,6 +130,7 @@ namespace
 
                     }
                 }
+				g_curBufferLoc = Sink->m_WavChannels[0].curBufferLoc;
 
                 // Let the audio-engine know that the object data are available for processing now 
                 hr = Sink->m_Renderer->m_SpatialAudioStream->EndUpdatingAudioObjects();
@@ -147,8 +152,7 @@ Sample::Sample() :
     m_bPlayingSound(false),
     m_ctrlConnected(false),
     m_bufferSize(0),
-    m_fileLoaded(false),
-    m_curFile(0)
+    m_fileLoaded(false)
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>();
     m_deviceResources->RegisterDeviceNotify(this);
@@ -173,8 +177,6 @@ void Sample::Initialize(IUnknown* window, int width, int height, DXGI_MODE_ROTAT
 	InitializeSpatialStream();
 
 	SetChannelTypesVolumes();
-
-	m_fileLoaded = LoadFile(g_FileList[m_curFile]);
 }
 
 #pragma region Frame Update
@@ -252,8 +254,11 @@ void Sample::Update(DX::StepTimer const&)
 			//Start spatial worker thread
 			if (!m_bThreadActive)
 			{
-				//reload file to start again
-				m_fileLoaded = LoadFile(g_FileList[m_curFile]);
+				//start again
+				for (UINT32 i = 0; i < MAX_CHANNELS; i++)
+				{
+					m_WavChannels[i].curBufferLoc = 0;
+				}
 				//startup spatial thread
 				m_bThreadActive = true;
 				m_bPlayingSound = true;
@@ -277,31 +282,6 @@ void Sample::Update(DX::StepTimer const&)
 	}
 	if (m_keyboardButtons.IsKeyReleased(DirectX::Keyboard::Keys::Up) || m_gamePadButtons.b == m_gamePadButtons.RELEASED)
 	{
-		//if spatial thread active and playing, shutdown and start new file
-		if (m_bThreadActive && m_bPlayingSound)
-		{
-			m_bThreadActive = false;
-			m_bPlayingSound = false;
-			WaitForThreadpoolWorkCallbacks(m_workThread, FALSE);
-			CloseThreadpoolWork(m_workThread);
-
-			//load next file
-			m_curFile++;
-			if (m_curFile == numFiles) m_curFile = 0;
-			m_fileLoaded = LoadFile(g_FileList[m_curFile]);
-
-			//if successfully loaded, start up thread and playing new file
-			if (m_fileLoaded)
-			{
-				m_bThreadActive = true;
-				m_bPlayingSound = true;
-				m_workThread = CreateThreadpoolWork(SpatialWorkCallback, this, nullptr);
-				SubmitThreadpoolWork(m_workThread);
-			}
-		}
-		else
-		{
-			//if thread active but paused, shutdown thread to load new file
 			if (m_bThreadActive)
 			{
 				m_bThreadActive = false;
@@ -310,11 +290,43 @@ void Sample::Update(DX::StepTimer const&)
 				CloseThreadpoolWork(m_workThread);
 			}
 
-			//load next file
-			m_curFile++;
-			if (m_curFile == numFiles) m_curFile = 0;
-			m_fileLoaded = LoadFile(g_FileList[m_curFile]);
-		}
+
+			FileOpenPicker^ openPicker = ref new FileOpenPicker();
+			openPicker->SuggestedStartLocation = PickerLocationId::MusicLibrary;
+			openPicker->FileTypeFilter->Append(".wav");
+
+			create_task(openPicker->PickSingleFileAsync()).then([/*this*/=](StorageFile^ file)
+			{
+				if (file)
+				{
+					create_task(FileIO::ReadBufferAsync(file)).then([this, file](task<IBuffer^> task)
+					{
+						try
+						{
+							IBuffer^ buffer = task.get();
+							DataReader^ dataReader = DataReader::FromBuffer(buffer);
+							auto bytes = ref new Array<byte>(buffer->Length);
+							dataReader->ReadBytes(bytes);
+							delete dataReader; // As a best practice, explicitly close the dataReader resource as soon as it is no longer needed.
+							wchar_t text_buffer[256] = { 0 }; swprintf(text_buffer, _countof(text_buffer), L"%d bytes were read\n", bytes->Length); OutputDebugString(text_buffer);
+							m_fileLoaded = LoadFile(bytes->Data, buffer->Length);
+						}
+						catch (COMException^ ex)
+						{
+							wchar_t text_buffer[256] = { 0 }; swprintf(text_buffer, _countof(text_buffer), L"COMException!\n"); OutputDebugString(text_buffer);
+						}
+					});
+					swprintf(g_File, _countof(g_File), file->Path->Data());
+					wchar_t text_buffer[256] = { 0 }; swprintf(text_buffer, _countof(text_buffer), L"g_File=%s\n", g_File); OutputDebugString(text_buffer);
+				}
+				else
+				{
+				}
+			});
+
+
+
+
 	}
 
 	PIXEndEvent();
@@ -344,14 +356,14 @@ void Sample::Render()
 
     float spacing = m_font->GetLineSpacing();
 
-	m_font->DrawString(m_spriteBatch.get(), L"Simple Spatial Playback:", pos, ATG::Colors::White);
+	m_font->DrawString(m_spriteBatch.get(), L"Sample rate of file must be 48 KHz!", pos, ATG::Colors::White);
 	pos.y += spacing * 1.5f;
 
     wchar_t str[128] = {};
-    swprintf_s(str, L"   file: %ls", g_FileList[m_curFile]);
+    swprintf_s(str, L"file: %ls", g_File);
 	m_font->DrawString(m_spriteBatch.get(), str, pos, ATG::Colors::White);
 	pos.y += spacing;
-	swprintf_s(str, L"   state: %ls", (m_bThreadActive) ? ((m_bPlayingSound) ? L"Playing" : L"Paused") : L"Stopped");
+	swprintf_s(str, L"state: %ls @ %d", (m_bThreadActive) ? ((m_bPlayingSound) ? L"Playing" : L"Paused") : L"Stopped", g_curBufferLoc);
 	m_font->DrawString(m_spriteBatch.get(), str, pos, ATG::Colors::White);
     pos.y += spacing * 1.5f;
 
@@ -362,8 +374,8 @@ void Sample::Render()
     pos.y += spacing;
 
     const wchar_t* str2 = m_ctrlConnected
-        ? L"Use [B] to change to next file"
-        : L"Use UP key to change to next file";
+        ? L"Use [B] to choose file"
+        : L"Use UP key to choose file";
     DX::DrawControllerString(m_spriteBatch.get(), m_font.get(), m_ctrlFont.get(), str2, pos, ATG::Colors::White);
     pos.y += spacing;
 
@@ -502,7 +514,7 @@ HRESULT Sample::InitializeSpatialStream(void)
 	return hr;
 }
 
-bool Sample::LoadFile(LPCWSTR inFile)
+bool Sample::LoadFile(uint8_t* wavData, size_t wavDataSize)
 {
 	//clear and reset m_WavChannels
 	for (UINT32 i = 0; i < MAX_CHANNELS; i++)
@@ -519,9 +531,13 @@ bool Sample::LoadFile(LPCWSTR inFile)
 	HRESULT hr = S_OK;
 	std::unique_ptr<uint8_t[]>              m_waveFile;
 	DirectX::WAVData  WavData;
-	hr = DirectX::LoadWAVAudioFromFileEx(inFile, m_waveFile, WavData);
+	hr = DirectX::LoadWAVAudioInMemoryEx(wavData, wavDataSize, WavData);
 	if (FAILED(hr))
 	{
+		wchar_t text_buffer[256] = { 0 }; swprintf(text_buffer, _countof(text_buffer), L"LoadFile.hr=%d\n", hr); OutputDebugString(text_buffer);
+		if (hr == E_ACCESSDENIED) {
+			wchar_t text_buffer[256] = { 0 }; swprintf(text_buffer, _countof(text_buffer), L"LoadFile.hr=E_ACCESSDENIED\n"); OutputDebugString(text_buffer);
+		}
 		return false;
 	}
 
@@ -586,10 +602,12 @@ bool Sample::LoadFile(LPCWSTR inFile)
 void Sample::SetChannelTypesVolumes(void)
 {
 	m_WavChannels[0].volume = 1.f;
-	m_WavChannels[0].objType = AudioObjectType_FrontLeft;
+//	m_WavChannels[0].objType = AudioObjectType_FrontLeft;
+	m_WavChannels[0].objType = AudioObjectType_TopFrontLeft;
 
 	m_WavChannels[1].volume = 1.f;
-	m_WavChannels[1].objType = AudioObjectType_FrontRight;
+//	m_WavChannels[1].objType = AudioObjectType_FrontRight;
+	m_WavChannels[1].objType = AudioObjectType_TopFrontRight;
 
 	m_WavChannels[2].volume = 1.f;
 	m_WavChannels[2].objType = AudioObjectType_FrontCenter;
@@ -610,10 +628,12 @@ void Sample::SetChannelTypesVolumes(void)
 	m_WavChannels[7].objType = AudioObjectType_SideRight;
 
 	m_WavChannels[8].volume = 1.f;
-	m_WavChannels[8].objType = AudioObjectType_TopFrontLeft;
+//	m_WavChannels[8].objType = AudioObjectType_TopFrontLeft;
+	m_WavChannels[8].objType = AudioObjectType_FrontLeft;
 
 	m_WavChannels[9].volume = 1.f;
-	m_WavChannels[9].objType = AudioObjectType_TopFrontRight;
+//	m_WavChannels[9].objType = AudioObjectType_TopFrontRight;
+	m_WavChannels[9].objType = AudioObjectType_FrontRight;
 
 	m_WavChannels[10].volume = 1.f;
 	m_WavChannels[10].objType = AudioObjectType_TopBackLeft;
