@@ -101,7 +101,7 @@
     <AppxSymbolPackageEnabled>false</AppxSymbolPackageEnabled>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
-    <AppxBundle>Always</AppxBundle>
+    <AppxBundle>Auto</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <PackageCertificateThumbprint>22984EE72B0801DB44B973E8EC6A3896AE8C0593</PackageCertificateThumbprint>
     <PackageCertificateKeyFile>SimpleSpatialPlaySoundUWP_StoreKey.pfx</PackageCertificateKeyFile>
